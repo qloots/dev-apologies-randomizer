@@ -7,6 +7,7 @@ import qloots.project.devapologiesrandomizer.repository.ApologyRepository;
 import qloots.project.devapologiesrandomizer.utils.RandomUtil;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class ApologyService {
@@ -24,17 +25,25 @@ public class ApologyService {
         return apologyRepository.findAll();
     }
 
-    public Apology getApologyById(Long id) {
-        return apologyRepository.findById(id).get();
-    }
-
     public Apology getRandomApology() {
         List<Apology> allApologies = getAllApologies();
-        int max = allApologies.size();
+        if (!allApologies.isEmpty()) {
+            Optional<Apology> firstApology = allApologies.stream().findFirst();
+            int min = firstApology.get().getHttpCode();
+            int max = min + allApologies.size();
 
-        Long randomApologyId = (long) randomUtil.getRandomInteger(max, 0);
+            int randomApologyId = randomUtil.getRandomInteger(max, min);
 
-        return getApologyById(randomApologyId);
+            Apology apology = getApologyByHttpCode(randomApologyId);
+            if (apology != null) {
+                return apology;
+            }
+        }
+        Apology apology = new Apology();
+        apology.setHttpCode(418);
+        apology.setTag("NOT IN DATABASE");
+        apology.setMessage("I am a Tea Pot");
+        return apology;
     }
 
     public Apology createApology(Apology apology) {

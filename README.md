@@ -1,7 +1,7 @@
 <h3 align="center">Dev Apologies Generate</h3>
 
 <p align="center">
-An application which will generate random apologies for a developer
+A backend application which will generate random apologies for a developer
 </p>
 
 <!-- PROJECT LOGO -->
@@ -88,19 +88,12 @@ To run the project, you will need :
    git clone https://github.com/qloots/dev-apologies-randomizer.git
    ```
 2. Open it in your favorite IDE
-3. Create the jar file using your IDE or from your terminal:
+3. Build the PostgreSQL Docker image
    ```sh
-   mvn clean package -DspkipTest
+   docker compose up -d
    ```
-4. Build the Docker image
-   ```sh
-   docker compose build
-   ```
-5. Run the Java Application :
-   ```sh
-   docker compose up dev_app
-   ``` 
-6. Enjoy it with Postman in a fist time
+4. Run the ``DevApologiesRandomizerApplication`` via your IDE 
+5. Enjoy it with Postman in a fist time
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -109,15 +102,36 @@ To run the project, you will need :
 <!-- USAGE EXAMPLES -->
 ## Usage
 
-In a first time, you can use Postman to use the project.  
-``GET http://localhost:8080/api/apologies`` will return you all the available apologies.
+### Get all apologies  
+``GET http://localhost:8080/api/apologies`` will return you all the available apologies.  
+![img.png](src/main/resources/img/get_all.png)
 
-``GET http://localhost:8080/api/ping`` will return you `Pong` as body response.
+### Get a random apology
+``GET http://localhost:8080/api/apologies/random`` will return you a random apology t give to your customer.  
+![img.png](src/main/resources/img/get_random.png)
 
-_For more examples, please refer to the [Documentation](https://example.com)_
+
+### Add an apology
+``POST http://localhost:8080/api/apologies`` will add an apology into the database.  
+![img.png](src/main/resources/img/post_apology.png)
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
+
+### Stop the project
+1. Stop the running application from your IDE.
+2. Shut down the dockerized PostgreSQL: 
+   ```sh
+   docker compose down
+   ```
+3. Delete all containers:
+   ```sh
+   docker rm -f $(docker ps -a -q)
+   ```
+4. Delete all volumes:
+   ```sh
+   docker volume rm $(docker volume ls -q)
+   ```
 
 
 <!-- CONTRIBUTING -->

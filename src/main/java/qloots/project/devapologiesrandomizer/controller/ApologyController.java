@@ -24,11 +24,6 @@ public class ApologyController {
         return apologyService.getAllApologies();
     }
 
-    @GetMapping("/{id}")
-    public Apology getApologyById(@PathVariable Long id) {
-        return apologyService.getApologyById(id);
-    }
-
     @GetMapping("/{httpCode}")
     public Apology getApologyByHttpCode(@PathVariable int httpCode) {
         return apologyService.getApologyByHttpCode(httpCode);
