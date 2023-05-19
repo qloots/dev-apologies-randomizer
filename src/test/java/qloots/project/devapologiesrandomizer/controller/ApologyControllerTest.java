@@ -46,6 +46,7 @@ class ApologyControllerTest {
 
     @Test
     void getAllApologies() throws Exception {
+        // Given
         Apology apology1 = new Apology();
         apology1.setHttpCode(418);
         apology1.setTag("TEST 1");
@@ -58,6 +59,7 @@ class ApologyControllerTest {
 
         when(apologyService.getAllApologies()).thenReturn(apologies);
 
+        // When & Then
         mockMvc.perform(get("/api/apologies"))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
@@ -74,6 +76,7 @@ class ApologyControllerTest {
 
     @Test
     void getApologyByHttpCode() throws Exception {
+        // Given
         int httpCode = 418;
         Apology apology = new Apology();
         apology.setHttpCode(httpCode);
@@ -82,6 +85,7 @@ class ApologyControllerTest {
 
         when(apologyService.getApologyByHttpCode(httpCode)).thenReturn(apology);
 
+        // When & Then
         mockMvc.perform(get("/api/apologies/{httpCode}", httpCode))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
@@ -95,6 +99,7 @@ class ApologyControllerTest {
 
     @Test
     void getRandomApology() throws Exception {
+        // Given
         Apology apology = new Apology();
         apology.setHttpCode(418);
         apology.setTag("TEST");
@@ -102,6 +107,7 @@ class ApologyControllerTest {
 
         when(apologyService.getRandomApology()).thenReturn(apology);
 
+        // When & Then
         mockMvc.perform(get("/api/apologies/random"))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
@@ -115,6 +121,7 @@ class ApologyControllerTest {
 
     @Test
     void createApology() throws Exception {
+        // Given
         Apology apology = new Apology();
         apology.setHttpCode(418);
         apology.setTag("TEST");
@@ -122,6 +129,7 @@ class ApologyControllerTest {
 
         when(apologyService.createApology(any(Apology.class))).thenReturn(apology);
 
+        // When & Then
         mockMvc.perform(post("/api/apologies")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content("""

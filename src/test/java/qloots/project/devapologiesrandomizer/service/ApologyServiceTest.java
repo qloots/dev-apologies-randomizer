@@ -59,22 +59,22 @@ class ApologyServiceTest {
 
     @Test
     void getAllApologies() {
-        // Arrange
+        // Given
         List<Apology> expectedApologies = new ArrayList<>();
         expectedApologies.add(apology1);
         when(apologyRepository.findAll()).thenReturn(expectedApologies);
 
-        // Act
+        // When
         List<Apology> actualApologies = apologyService.getAllApologies();
 
-        // Assert
+        // Then
         assertEquals(expectedApologies, actualApologies);
         verify(apologyRepository, times(1)).findAll();
     }
 
     @Test
     void getRandomApologyWithExistingApologies() {
-        // Arrange
+        // Given
         List<Apology> allApologies = new ArrayList<>();
         allApologies.add(apology1);
         allApologies.add(apology2);
@@ -86,10 +86,10 @@ class ApologyServiceTest {
         when(apologyService.getApologyByHttpCode(anyInt())).thenReturn(expectedApology);
         when(randomUtil.getRandomInteger(anyInt(), anyInt())).thenReturn(500);
 
-        // Act
+        // When
         Apology randomApology = apologyService.getRandomApology();
 
-        // Assert
+        // Then
         assertEquals(expectedApology.getHttpCode(), randomApology.getHttpCode());
         assertEquals(expectedApology.getTag(), randomApology.getTag());
         assertEquals(expectedApology.getMessage(), randomApology.getMessage());
@@ -97,13 +97,13 @@ class ApologyServiceTest {
 
     @Test
     void getRandomApologyWithNoApologies() {
-        // Arrange
+        // Given
         when(apologyService.getAllApologies()).thenReturn(new ArrayList<>());
 
-        // Act
+        // When
         Apology randomApology = apologyService.getRandomApology();
 
-        // Assert
+        // Then
         assertEquals(418, randomApology.getHttpCode());
         assertEquals("NOT IN DATABASE", randomApology.getTag());
         assertEquals("I am a Tea Pot", randomApology.getMessage());
@@ -112,29 +112,29 @@ class ApologyServiceTest {
 
     @Test
     void createApology() {
-        // Arrange
+        // Given
         Apology expectedApology = apology1;
         when(apologyRepository.save(expectedApology)).thenReturn(expectedApology);
 
-        // Act
+        // When
         Apology createdApology = apologyService.createApology(expectedApology);
 
-        // Assert
+        // Then
         assertEquals(expectedApology, createdApology);
         verify(apologyRepository, times(1)).save(expectedApology);
     }
 
     @Test
     void getApologyByHttpCode() {
-        // Arrange
+        // Given
         int httpCode = 404;
         Apology expectedApology = apology3;
         when(apologyRepository.findByHttpCode(httpCode)).thenReturn(expectedApology);
 
-        // Act
+        // When
         Apology actualApology = apologyService.getApologyByHttpCode(httpCode);
 
-        // Assert
+        // Then
         assertEquals(expectedApology, actualApology);
         verify(apologyRepository, times(1)).findByHttpCode(httpCode);
     }
