@@ -1,6 +1,5 @@
 package qloots.project.devapologiesrandomizer.controller;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -16,8 +15,11 @@ import java.util.List;
 @RequestMapping("/api/apologies")
 public class ApologyController {
 
-    @Autowired
-    private ApologyService apologyService;
+    private final ApologyService apologyService;
+
+    public ApologyController(ApologyService apologyService) {
+        this.apologyService = apologyService;
+    }
 
     @GetMapping
     public List<Apology> getAllApologies() {
