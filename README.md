@@ -93,7 +93,7 @@ To run the project, you will need :
    docker compose up -d
    ```
 4. Run the ``DevApologiesRandomizerApplication`` via your IDE 
-5. Enjoy it with Postman in a fist time
+5. Enjoy it with Postman in a first time
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
